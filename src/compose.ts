@@ -75,6 +75,7 @@ async function pull(name: string, source: Source) {
   if (existsSync(sourcePath)) {
     console.log('pull', name);
     const git = simpleGit(sourcePath);
+    await git.pull();
     console.log('checkout', name, source.branch);
     await git.checkout(source.branch);
     console.log('git pull');

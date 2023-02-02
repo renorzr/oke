@@ -21,9 +21,7 @@ export async function up(file: string) {
   mkdirSync(SOURCE_DIR, { recursive: true });
   await pullSources(okeConfig.sources);
   await invalidateImages(okeConfig.sources);
-  const proc = spawn('docker', ['compose', 'up', '-d']);
-  proc.stdout.pipe(process.stdout);
-  proc.stderr.pipe(process.stderr);
+  const proc = spawn('docker', ['compose', 'up', '-d'], { stdio: 'inherit' });
 
   await new Promise((resolve => {
     proc.on('close', code => {

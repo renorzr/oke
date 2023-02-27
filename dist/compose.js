@@ -16,9 +16,6 @@ const OKE_END = "}oke}}";
 const SOURCE_DIR = (0, path_1.resolve)("./source");
 async function up(file) {
     const okeConfig = extractConfig(file);
-    console.log('OKE config:');
-    console.log((0, js_yaml_1.dump)(okeConfig));
-    console.log('mkdir', SOURCE_DIR);
     (0, fs_2.mkdirSync)(SOURCE_DIR, { recursive: true });
     await pullSources(okeConfig.sources);
     await invalidateImages(okeConfig.sources);

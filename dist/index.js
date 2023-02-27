@@ -7,6 +7,7 @@ const commander_1 = require("commander");
 const dotenv_1 = require("dotenv");
 const compose_1 = require("./compose");
 const fs_1 = require("fs");
+const process_1 = require("process");
 const program = new commander_1.Command();
 program
     .version('0.0.1')
@@ -18,9 +19,11 @@ console.log(chalk.green((0, figlet_1.textSync)('OneKeyEnv', { horizontalLayout: 
 const { file, env } = program.opts();
 if (!(0, fs_1.existsSync)(file)) {
     console.log(file, 'not exists');
+    (0, process_1.exit)(1);
 }
 if (!(0, fs_1.existsSync)(env)) {
     console.log(env, 'not exists');
+    (0, process_1.exit)(1);
 }
 (async function () {
     (0, dotenv_1.config)({ path: env });

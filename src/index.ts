@@ -6,6 +6,7 @@ import { Command } from 'commander';
 import { config } from 'dotenv';
 import { up } from './compose';
 import { existsSync } from 'fs';
+import { exit } from 'process';
 
 
 const program = new Command();
@@ -23,10 +24,12 @@ const { file, env } = program.opts();
 
 if (!existsSync(file)) {
   console.log(file, 'not exists');
+  exit(1);
 }
 
 if (!existsSync(env)) {
   console.log(env, 'not exists');
+  exit(1);
 }
 
 (async function () {

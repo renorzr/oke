@@ -17,6 +17,18 @@ export async function up(file: string) {
   mkdirSync(SOURCE_DIR, { recursive: true });
   await pullSources(okeConfig.sources);
   await invalidateImages(okeConfig.sources);
+  if (existsSync('before.js')) {
+    console.log('start before handler: before.js');
+    const code = await new Promise(resolve => {
+      spawn('node', ['before.js'], { stdio: 'inherit' }).on('close', code => resolve(code));
+    });
+
+    if (code) {
+      console.log('before handler exited with code', code);
+      return;
+    }
+  }
+
   const proc = spawn('docker', ['compose', 'up', '-d'], { stdio: 'inherit' });
 
   await new Promise((resolve => {
